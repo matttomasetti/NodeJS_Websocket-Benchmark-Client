@@ -95,8 +95,7 @@ class Benchmarker {
             websocket_address: process.env.WEBSOCKET_ADDRESS || "127.0.0.1",
             websocket_port: process.env.WEBSOCKET_PORT || 8080,
             connection_interval: process.env.ADD_CONNECTIONS || 100,
-            request_interval: process.env.REQUESTS || 100,
-            request_timeout: 10
+            request_interval: process.env.REQUESTS || 50,
         };
 
         /**
@@ -123,7 +122,7 @@ class Benchmarker {
          * The number of rounds to perform per test
          * @type {number}
          */
-        this.ROUNDS = 50;
+        this.ROUNDS = process.env.ROUNDS || 25;
 
     }
 

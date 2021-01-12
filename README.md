@@ -28,7 +28,10 @@ That's it! The websocket server will automatically start
     * Default: 100
     * Type: integer
 * <b>REQUESTS</b> - The number of requests to sound out per connected client per round
-    * Default: 
+    * Default: 50
+    * Type: integer
+* <b>ROUND</b> - The number of rounds to perform per test
+    * Default: 25
     * Type: integer
 
 
