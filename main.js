@@ -9,6 +9,9 @@ class Benchmarker {
 
     /**
      * Initializes all the data that will be needed throughout the program
+     *
+     * We initialize data that will be shared between mutliple files as objects, becuase
+     * objects will be passed as reference, where a primitve variable would be passed by value
      */
     constructor() {
 
