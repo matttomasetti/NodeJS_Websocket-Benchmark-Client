@@ -203,7 +203,7 @@ module.exports = class Connection {
                 // retry connection (wrapped in an async function)
                 let connect = async function() { self.connect(); };
                 connect().then(() => {
-                    self.connection_progress_obj.counter++;
+                    //self.connection_progress_obj.counter++;
                     resolve();
                 });
             });
