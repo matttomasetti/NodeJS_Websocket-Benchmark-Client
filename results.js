@@ -116,7 +116,7 @@ module.exports = class Results {
             "clients": client_length,
             "count": count,
             "total": (this.request_interval * client_length),
-            "percentage": count / (this.request_intervalc * client_length) * 100 + "%",
+            "percentage": count / (this.request_interval * client_length) * 100 + "%",
             "time": time_elapse,
             "longest": longest_rt,
             "shortest": shortest_rt,

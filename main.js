@@ -214,7 +214,7 @@ class Benchmarker {
                 connection_bar.stop();
 
                 // output to the conole the time elapse for the new connections to connect
-                console.log("\nConnection Time: " + this.connection_progress_obj.connection_time);
+                console.log("\nConnection Time: " + this.connection_obj.connection_time);
 
                 // start the benchmarking progress bar
                 this.benchmark_progress_obj.total = this.benchmark_obj.request_interval * this.connection_obj.clients.length;
