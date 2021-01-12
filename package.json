@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cli-progress": "^3.8.2",
+    "json2csv": "^5.0.5",
+    "progress": "^1.1.8",
+    "websocket": "^1.0.33"
+  }
+}
