@@ -163,6 +163,7 @@ module.exports = class Connection {
                         // If the number of successful requests is not changing, we can assume no more
                         // will be coming in.
                         self.last_count.push(self.count);
+                        counter++;
 
                     }, 1000);
                 }
