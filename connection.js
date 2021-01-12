@@ -148,7 +148,7 @@ module.exports = class Connection {
                         //    been running for 5 minutes
                         if ( readyToResolve
                             || ((self.count / self.benchmark_obj.request_interval) === 1)
-                            || (self.count === self.last_count[0]
+                            || (self.count == self.last_count[0]
                                 && (((self.count / self.benchmark_obj.request_interval) > .9)
                                     || (counter++ >= 300)
                             ))) {
@@ -163,7 +163,6 @@ module.exports = class Connection {
                         // If the number of successful requests is not changing, we can assume no more
                         // will be coming in.
                         self.last_count.push(self.count);
-                        counter++;
 
                     }, 1000);
                 }
@@ -226,7 +225,7 @@ module.exports = class Connection {
 
                     // increment error tacker by 1
                     self.connection_errors++;
-                    console.log("Connection Error: " + error.toString());
+                    //console.log("Connection Error: " + error.toString());
 
                     // try to reconnect
                     self.connect();
