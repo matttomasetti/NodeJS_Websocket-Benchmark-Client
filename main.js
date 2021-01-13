@@ -92,7 +92,7 @@ class Benchmarker {
          * @type {Object}
          */
         this.benchmark_obj = {
-            websocket_address: process.env.WEBSOCKET_ADDRESS || "127.0.0.1",
+            websocket_address: "127.0.0.1",
             websocket_port: process.env.WEBSOCKET_PORT || 8080,
             connection_interval: process.env.ADD_CONNECTIONS || 100,
             request_interval: process.env.REQUESTS || 50,
@@ -202,7 +202,7 @@ class Benchmarker {
 
                 // determine the total number of expected connections
                 // REQUEST_INTERVAL * ROUND_NUMBER
-                this.connection_progress_obj.total = (round + 1) * this.benchmark_obj.request_interval;
+                this.connection_progress_obj.total = (round + 1) * this.benchmark_obj.connection_interval;
 
                 // start the connection progress bar
                 let connection_bar = new ProgressBar(this.connection_progress_obj);
