@@ -224,6 +224,7 @@ module.exports = class Connection {
                 // increment connection counter by 1
                 self.connection_progress_obj.counter++;
 
+                // start heartbeat to keep connection alive
                 self.ping();
 
                 /**
@@ -304,10 +305,22 @@ module.exports = class Connection {
         });
     }
 
+    /**
+     * Pings the server at a regular interval.
+     * Websockets require a "heartbeat" in order to keep the conneciton open.
+     * @returns {void}
+     */
     ping(){
+
+        // allows this to be used inside nested functions
         let self = this
+
+        // send a request to the websocket server ever 5 seconds
         this.pingTimer = setInterval(function () {
+
             // create a JSON string containing the current request number
+            // we use 0 as to not interer with any unsigned ints on the server end, as well as any possible
+            // pening responses from the server
             let data = JSON.stringify({'c': 0});
 
             // send the request to the websocket server
@@ -318,6 +331,7 @@ module.exports = class Connection {
 
     /**
      * Closes the connection to the websocket server
+     * @returns {void}
      */
     close(){
         this.keep_alive = false;
