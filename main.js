@@ -92,7 +92,7 @@ class Benchmarker {
          * @type {Object}
          */
         this.benchmark_obj = {
-            websocket_address: "127.0.0.1",
+            websocket_address: process.env.WEBSOCKET_ADDRESS || "127.0.0.1",
             websocket_port: process.env.WEBSOCKET_PORT || 8080,
             connection_interval: process.env.ADD_CONNECTIONS || 100,
             request_interval: process.env.REQUESTS || 50,

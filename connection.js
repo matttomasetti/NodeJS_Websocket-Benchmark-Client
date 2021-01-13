@@ -14,6 +14,12 @@ module.exports = class Connection {
     constructor(benchmark_obj, connection_progress_obj, benchmark_progress_obj) {
 
         /**
+         * Signifies whether the connection should be kept alive, and therefore reconnected if closed
+         * @type {boolean}
+         */
+        this.keep_alive = true;
+
+        /**
          * Client connection to the websocket server
          * @type {WebSocketClient}
          */
@@ -131,14 +137,14 @@ module.exports = class Connection {
                 // if the request being sent is that last in the loop..
                 if(i === this.benchmark_obj.request_interval - 1) {
                     const self = this;
-                    var counter = 0;
+                    var timer = 0;
 
                     // ... check once per second if the function should resolve
                     const finishCount = setInterval(function () {
 
                         // The function should resolve if:
                         // 1. There are no requests with a "finish" index which is undefined
-                        let readyToResolve = self.times.every(function (time) {
+                        let readyToResolve = self.times.every(function (time, message_index) {
                             return time['finish'] !== undefined;
                         });
 
@@ -148,9 +154,9 @@ module.exports = class Connection {
                         //    been running for 5 minutes
                         if ( readyToResolve
                             || ((self.count / self.benchmark_obj.request_interval) === 1)
-                            || (self.count == self.last_count[0]
+                            || (self.count === self.last_count[0]
                                 && (((self.count / self.benchmark_obj.request_interval) > .9)
-                                    || (counter++ >= 300)
+                                    || (timer++ >= 100)
                             ))) {
 
                             // stop checking if the request process has finished, and resolve with the times array
@@ -218,6 +224,8 @@ module.exports = class Connection {
                 // increment connection counter by 1
                 self.connection_progress_obj.counter++;
 
+                self.ping();
+
                 /**
                  * Connection Error Event
                  */
@@ -225,6 +233,7 @@ module.exports = class Connection {
 
                     // increment error tacker by 1
                     self.connection_errors++;
+                    self.connection_progress_obj.counter--;
                     //console.log("Connection Error: " + error.toString());
 
                     // try to reconnect
@@ -259,8 +268,19 @@ module.exports = class Connection {
 
                         }
                     }
-
                 });
+
+                /**
+                 * Connection Close Event
+                 */
+                connection.on('close', function () {
+                    self.connection_progress_obj.counter--;
+                    if (self.keep_alive) {
+                        self.connect();
+                    }
+                });
+
+
 
                 /**
                  *
@@ -284,10 +304,24 @@ module.exports = class Connection {
         });
     }
 
+    ping(){
+        let self = this
+        this.pingTimer = setInterval(function () {
+            // create a JSON string containing the current request number
+            let data = JSON.stringify({'c': 0});
+
+            // send the request to the websocket server
+            self.connection.sendUTF(data);
+
+        }, 5000);
+    }
+
     /**
      * Closes the connection to the websocket server
      */
     close(){
+        this.keep_alive = false;
+        clearInterval(this.pingTimer);
         this.connection.close();
     }
 };
