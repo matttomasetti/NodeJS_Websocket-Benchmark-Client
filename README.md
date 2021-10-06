@@ -33,7 +33,7 @@ That's it! The websocket server will automatically start
 * <b>ADD_CONNECTIONS</b>  - The number of websocket connections to add each round
     * Default: 100
     * Type: integer
-* <b>REQUESTS</b> - The number of requests to sound out per connected client per round
+* <b>REQUESTS</b> - The number of requests to send out per connected client per round
     * Default: 50
     * Type: integer
 * <b>ROUNDS</b> - The number of rounds to perform per test
